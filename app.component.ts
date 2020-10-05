@@ -18,9 +18,7 @@ export class AppComponent {
   @ViewChild('RTE', null) public rteObj: RichTextEditorComponent;
 
   public data: { [key: string]: Object }[] = [
-    { text: '{{clientName}}', id: 'list-01', "htmlAttributes": { draggable: true } },
-    { text: '{{partnerName}}', id: 'list-02', "htmlAttributes": { draggable: true } },
-    { text: '{{Name}}', id: 'list-03', "htmlAttributes": { draggable: true } }
+    { text: '{{name}}', id: 'list-01', "htmlAttributes": { draggable: true } }
   ];
 
   onCreate() {
