@@ -1,14 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
-import { ToolbarService, LinkService, ImageService, HtmlEditorService, RichTextEditorComponent } from '@syncfusion/ej2-angular-richtexteditor';
+import {
+  ToolbarService,
+  LinkService,
+  ImageService,
+  HtmlEditorService,
+  RichTextEditorComponent,
+} from '@syncfusion/ej2-angular-richtexteditor';
 
 import { DragEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  providers: [ToolbarService, LinkService, ImageService, HtmlEditorService]
+  providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
 })
-
 export class AppComponent {
   private listboxEle: any;
   private editArea: any;
@@ -18,19 +23,23 @@ export class AppComponent {
   @ViewChild('RTE', null) public rteObj: RichTextEditorComponent;
 
   public data: { [key: string]: Object }[] = [
-    { text: '{{name}}', id: 'list-01', "htmlAttributes": { draggable: true } }
+    {
+      text: '{{name_field}}',
+      id: 'list-01',
+      htmlAttributes: { draggable: true },
+    },
   ];
 
   onCreate() {
     this.listboxEle = document.getElementById('listbox');
-    this.editArea = document.querySelector("#defaultRTE .e-content");
-    
+    this.editArea = document.querySelector('#defaultRTE .e-content');
+
     // Drop handler
-    this.editArea.addEventListener("drop", this.dropHandler.bind(this));
+    this.editArea.addEventListener('drop', this.dropHandler.bind(this));
 
     // DragStart event binding
-    this.listboxEle.addEventListener("dragstart", function (e) {
-      e.dataTransfer.setData("Text", e.target.innerText);
+    this.listboxEle.addEventListener('dragstart', function (e) {
+      e.dataTransfer.setData('Text', e.target.innerText);
     });
   }
 
@@ -43,7 +52,9 @@ export class AppComponent {
       let range: Range;
 
       if (this.rteObj.contentModule.getDocument().caretRangeFromPoint) {
-        range = this.rteObj.contentModule.getDocument().caretRangeFromPoint(e.clientX, e.clientY);
+        range = this.rteObj.contentModule
+          .getDocument()
+          .caretRangeFromPoint(e.clientX, e.clientY);
       } else if (e.rangeParent) {
         range = this.rteObj.contentModule.getDocument().createRange();
         range.setStart(e.rangeParent, e.rangeOffset);
@@ -55,9 +66,13 @@ export class AppComponent {
         this.rteObj.formatter.saveData();
       }
 
-      var text = e.dataTransfer.getData('Text').replace(/\n/g, '').replace(/\r/g, '').replace(/\r\n/g, '');
+      var text = e.dataTransfer
+        .getData('Text')
+        .replace(/\n/g, '')
+        .replace(/\r/g, '')
+        .replace(/\r\n/g, '');
 
-      this.rteObj.executeCommand("insertHTML", text);
+      this.rteObj.executeCommand('insertHTML', text);
       this.rteObj.formatter.saveData();
       this.rteObj.formatter.enableUndo(this.rteObj);
     }
